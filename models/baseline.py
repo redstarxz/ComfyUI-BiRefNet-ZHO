@@ -16,8 +16,8 @@ from models.modules.ing import *
 from models.refinement.refiner import Refiner, RefinerPVTInChannels4, RefUNet
 from models.refinement.stem_layer import StemLayer
 
-from ..config import Config
-from ..dataset import class_labels_TR_sorted
+from config import Config
+from dataset import class_labels_TR_sorted
 
 
 class BiRefNet(nn.Module):
