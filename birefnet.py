@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import torch.nn.functional as F
 from PIL import Image
 from models.baseline import BiRefNet
-from config import Config
+from .config import Config
 from torchvision.transforms.functional import normalize
 import numpy as np
 import folder_paths
@@ -45,7 +45,7 @@ class BiRefNet_ModelLoader_Zho:
     RETURN_NAMES = ("birefnetmodel",)
     FUNCTION = "load_model"
     CATEGORY = "🧹BiRefNet"
-  
+
     def load_model(self, birefnet_model):
         net = BiRefNet()
         model_path = folder_paths.get_full_path("BiRefNet", birefnet_model)
@@ -58,7 +58,7 @@ class BiRefNet_ModelLoader_Zho:
 
         net.load_state_dict(state_dict)
         net.to(device)
-        net.eval() 
+        net.eval()
         return [net]
 
 
@@ -79,7 +79,7 @@ class BiRefNet_Zho:
     RETURN_NAMES = ("image", "mask", )
     FUNCTION = "remove_background"
     CATEGORY = "🧹BiRefNet"
-  
+
     def remove_background(self, birefnetmodel, image):
         processed_images = []
         processed_masks = []
@@ -98,11 +98,11 @@ class BiRefNet_Zho:
 
             result = birefnetmodel(im_tensor)[-1].sigmoid()
             #print(result.shape)
-            
+
             result = torch.squeeze(F.interpolate(result, size=(h,w), mode='bilinear') ,0)
             ma = torch.max(result)
             mi = torch.min(result)
-            result = (result-mi)/(ma-mi)    
+            result = (result-mi)/(ma-mi)
             im_array = (result*255).cpu().data.numpy().astype(np.uint8)
             pil_im = Image.fromarray(np.squeeze(im_array))
             new_im = Image.new("RGBA", pil_im.size, (0,0,0,0))

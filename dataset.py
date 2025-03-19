@@ -6,7 +6,7 @@ from torch.utils import data
 from torchvision import transforms
 
 from preproc import preproc
-from config import Config
+from .config import Config
 from myutils import path_to_image
 
 

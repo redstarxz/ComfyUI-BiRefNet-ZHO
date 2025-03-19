@@ -16,8 +16,8 @@ from models.modules.ing import *
 from models.refinement.refiner import Refiner, RefinerPVTInChannels4, RefUNet
 from models.refinement.stem_layer import StemLayer
 
-from config import Config
-from dataset import class_labels_TR_sorted
+from ..config import Config
+from ..dataset import class_labels_TR_sorted
 
 
 class BiRefNet(nn.Module):
@@ -42,7 +42,7 @@ class BiRefNet(nn.Module):
             ])
 
         self.decoder = Decoder(channels)
-        
+
         if self.config.locate_head:
             self.locate_header = nn.ModuleList([
                 BasicDecBlk(channels[0], channels[-1]),
@@ -186,7 +186,7 @@ class Decoder(nn.Module):
                 # self.gdt_convs_pred_4 = nn.Sequential(nn.Conv2d(_N, 1, 1, 1, 0))
                 self.gdt_convs_pred_3 = nn.Sequential(nn.Conv2d(_N, 1, 1, 1, 0))
                 self.gdt_convs_pred_2 = nn.Sequential(nn.Conv2d(_N, 1, 1, 1, 0))
-                
+
                 # self.gdt_convs_attn_4 = nn.Sequential(nn.Conv2d(_N, 1, 1, 1, 0))
                 self.gdt_convs_attn_3 = nn.Sequential(nn.Conv2d(_N, 1, 1, 1, 0))
                 self.gdt_convs_attn_2 = nn.Sequential(nn.Conv2d(_N, 1, 1, 1, 0))
